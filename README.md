@@ -13,7 +13,7 @@ In this example the board is supposed to be attached to three sensors, so three 
 - **Light**
 - **Temperature**
 - **Motion**
-
+====
 The functions used to collect these data are _getLux()_, _getTemperature()_, _detectedMotion()_:
 ```
 float getLux(){
