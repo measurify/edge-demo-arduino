@@ -12,8 +12,8 @@ The board used for this example is ESP32, so you will need to select the ESP32 W
 In this example the board is supposed to be attached to three sensors, so three features are provided:
 - **Light**
 - **Temperature**
-- **Motion**
-====
+- **Motion** 
+
 The functions used to collect these data are _getLux()_, _getTemperature()_, _detectedMotion()_:
 ```
 float getLux(){
