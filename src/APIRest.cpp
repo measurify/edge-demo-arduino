@@ -475,7 +475,7 @@ bool APIRest::needToBeRePOST(string response){
 
 string APIRest::getActualDate(){  
 
-  timeElapsed = ((float)clock() / CLOCKS_PER_SEC)*SECOND - startingTime ; //in milliseconds
+  timeElapsed = ((long)clock() / CLOCKS_PER_SEC)*SECOND - startingTime ; //in milliseconds
   // [TBD] Arduino does not support std::to_string('float') so I used here string( String('float').c_str() )
   return string( String( atof(timestamp.c_str()) + timeElapsed ).c_str() );
 }
