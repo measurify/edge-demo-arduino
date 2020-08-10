@@ -20,12 +20,14 @@ APIRest::APIRest(){
   TESTING=false;
 }
 
-string APIRest::POSTLogin (string url, string username, string password){
+string APIRest::POSTLogin (string url, string username, string password, string tenant){
   if(!TESTING){
     HTTPClient http;
     http.begin(url.c_str()); //Specify the URL and certificate
     http.addHeader("Content-Type","application/json");
-    httpCode = http.POST( ("{\"username\": \"" + username + "\",\"password\": \"" + password + "\"}").c_str() );//this is the body
+    httpCode = http.POST( ("{\"username\": \"" + username + "\",
+                              \"password\": \"" + password + "\",
+                              \"tenant\": \"" + tenant + "\"}").c_str());//this is the body
     
     itoa(httpCode,httpCodeTmp,10);
     

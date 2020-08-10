@@ -152,7 +152,7 @@ int edgine::evaluate(vector<sample*> samples){
 void edgine::authenticate(){
   do{
     startLogCount= (float)clock() / CLOCKS_PER_SEC; 
-    response=Api->POSTLogin(opts.url+"/"+opts.ver+"/"+opts.login, opts.username, opts.password); // Authentication
+    response=Api->POSTLogin(opts.url+"/"+opts.ver+"/"+opts.login, opts.username, opts.password, opts.tenant); // Authentication
 
     if(isOKresponse(response)){
       token = parseToken(response);

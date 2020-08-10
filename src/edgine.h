@@ -30,6 +30,7 @@ using std::string;
 typedef struct{
   string username;
   string password;
+  string tenant;
   //route
   string url;
   string ver;

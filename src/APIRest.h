@@ -76,7 +76,7 @@ class APIRest{
   
   //methods
   static APIRest* getInstance();
-  string POSTLogin(string,string,string);
+  string POSTLogin(string,string,string,string);
   string GETInfoUpdateDate(string,string);
   string GETDescr(string,string);
   string GETScript(string,string);
