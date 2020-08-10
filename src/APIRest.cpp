@@ -25,10 +25,8 @@ string APIRest::POSTLogin (string url, string username, string password, string 
     HTTPClient http;
     http.begin(url.c_str()); //Specify the URL and certificate
     http.addHeader("Content-Type","application/json");
-    httpCode = http.POST( ("{\"username\": \"" + username + "\",
-                              \"password\": \"" + password + "\",
-                              \"tenant\": \"" + tenant + "\"}").c_str());//this is the body
-    
+    httpCode = http.POST( ("{\"username\": \"" + username + "\",\"password\": \"" + password + "\",\"tenant\": \"" + tenant + "\"}").c_str());//this is the body
+
     itoa(httpCode,httpCodeTmp,10);
     
     response=string(httpCodeTmp)+http.getString().c_str();
