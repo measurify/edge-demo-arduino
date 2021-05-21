@@ -8,10 +8,10 @@ This demo is based on [edge](https://github.com/Measurify/edge), a generic runti
 ## How to use
 This library requirements are listed on the [edge guide](https://github.com/Measurify/edge#arduinoesp). After you ensured your system satisfies all the prerequisites you can start using this demo.
 The board used for this example is ESP32, so you will need to select the ESP32 Wrover Module inside your IDE. If you don't know how to install it, have a look at the [source code](https://github.com/Measurify/edge#Arduino-example). Otherwise you can use boards which support the [WiFiNINA](https://www.arduino.cc/en/Reference/WiFiNINA) module (see how to install on the [edge guide](https://github.com/Measurify/edge#arduino-installation)).
-Remember to check the myDefines.h file, which allows to switch from Arduino, ESP and Windows platforms through preprocessor defines as follows:
-- WINDOWS for Windows platforms
-- ARDUINO for Arduino boards
-- ESP_WROVER and ARDUINO for ESP boards
+Remember to check the myDefines.h file, which allows to switch from Arduino, ESP and PC platforms through preprocessor defines as follows:
+- **ARDUINO** for Arduino boards
+- **ESP_WROVER** and **ARDUINO** for ESP boards
+If none are defined, compilation will be for PC.
 So, for this demo, you will need to define both ARDUINO and ESP_WROVER if you are using an ESP board, only ARDUINO if using an Arduino board.
 ## Code
 In this example the board is supposed to be attached to three sensors, so three features are provided:
