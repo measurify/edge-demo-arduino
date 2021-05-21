@@ -6,14 +6,14 @@
 #ifndef edgine_h
 #define edgine_h
 
-#include <myDefines.h>
+#include "myDefines.h"
 
 #ifdef ARDUINO
 #include "APIRest.h" // API wrapper
 #include "connection.h" // connection wrapper
 #else
-#include <APIRest_windows.h>
-#include <connection_windows.h>
+#include "APIRest_windows.h"
+#include "connection_windows.h"
 #endif
 
 #include <vector>

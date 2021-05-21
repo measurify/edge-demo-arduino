@@ -6,6 +6,7 @@
 
 #ifndef connection_h
 #define connection_h
+#include "myDefines.h"
 #include <string>
 using std::string;
 
@@ -24,6 +25,8 @@ class connection{
   //variables
   bool TESTING;
   bool connected;
+  const char* ssid;
+  const char* password;
 
   //methods
   static connection* getInstance();

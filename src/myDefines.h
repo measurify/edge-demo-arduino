@@ -2,7 +2,10 @@
 #define myDefines_h
 
 #ifndef ARDUINO
-	#define ARDUINO
+#define ARDUINO
+#endif
+#ifndef ESP_WROVER
+#define ESP_WROVER
 #endif
 
 #endif

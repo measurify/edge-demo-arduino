@@ -5,13 +5,27 @@
 */
 #ifndef APIRest_h
 #define APIRest_h
-
+#include "myDefines.h"
 #include <Arduino.h>
+
+#ifndef ESP_WROVER
+#undef min
+#undef max
+#endif
+
+#include <stdlib.h>
 #include <vector>
 using std::vector;
 #include <string>
 using std::string;
+
+#ifdef ESP_WROVER
 #include <HTTPClient.h>
+#else
+// #include <ArduinoHttpClient.h>
+#include <WiFiNINA.h>
+#endif
+
 #include <time.h>
 //#include <pthread.h>
 #include "sample.h"
@@ -38,9 +52,10 @@ class APIRest{
   private:
 
   //variables
+  int serverPort = 443;
   int httpCode;
   char httpCodeTmp [4];
-  string response;
+  string response = "";
   bool success;
   long  startingTime;
   long timeElapsed;
@@ -70,6 +85,10 @@ class APIRest{
   void rePOSTIssue(string);
   void checkIssueBufferSize();
   void checkSampleBufferSize();
+  string parseServerName(string);
+  string parseURLPath(string);
+  int parseHTTPCode(string);
+  void printResponseToSerial(string,string);
 
   public:
   //variables

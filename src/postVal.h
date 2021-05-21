@@ -6,7 +6,7 @@
 #ifndef postVal_h
 #define postVal_h
 
-#include <myDefines.h>
+#include "myDefines.h"
 
 #ifdef ARDUINO
 #include "APIRest.h"

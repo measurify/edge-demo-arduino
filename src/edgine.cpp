@@ -38,9 +38,15 @@ void edgine::init( options opts){
     }
     startGetCount = (float)clock() / CLOCKS_PER_SEC;
     #ifdef ARDUINO
+    Serial.println("\n===================================================================================");
+    Serial.println("Measurify Access JWT:\n");
     Serial.println(token.c_str());
+    Serial.println("===================================================================================");
     #else
+    cout << "\n===================================================================================" << endl;
+    cout << "Measurify Access JWT:\n" << endl;
     cout << token.c_str() << endl;
+    cout << "===================================================================================" << endl;
     #endif
     response = Api->GETInfoUpdateDate(opts.url+"/"+opts.ver+"/"+opts.info,token); // Get the infos
     if(isOKresponse(response)){
@@ -189,8 +195,10 @@ void edgine::retrieveScriptsCode(string token, string scriptsId){
     codeResponse = Api->GETScript(opts.url + "/" + opts.ver + "/" + opts.scps + "?filter={\"_id\":\"" + scriptId + "\"}", token);   
     
     #ifdef ARDUINO
+    Serial.print("- ");
     Serial.println(scriptId.c_str());
     #else
+    cout << "- " << endl;
     cout << scriptId.c_str() << endl;
     #endif
     
@@ -314,13 +322,15 @@ void edgine::retrieveScriptsCode(string token, string scriptsId){
   }
 
   #ifdef ARDUINO
-  Serial.print("There are: ");
+  Serial.print("\nThere are: ");
   Serial.print((int)scripts.size());
   Serial.println(" scripts");
+  Serial.println("===================================================================================");
   #else
-  cout << "There are: ";
+  cout << "\nThere are: ";
   cout << (int)scripts.size();
   cout << " scripts" << endl;
+  cout << "===================================================================================" << endl;
   #endif
 }
 
@@ -412,8 +422,12 @@ void edgine::setToken(string token){
 }
 
 string edgine::parseToken(string response){
-  if(response.find("J")!=-1){
-    return response.substr( response.find("J"), response.rfind("\"")-response.find("J") );
+  // if(response.find("J")!=-1){
+  //   return response.substr( response.find("J"), response.rfind("\"")-response.find("J") );
+  // }
+  // return "none";
+  if(response.find("\"token\":\"JWT ")!=-1){
+    return response.substr( response.find("\"token\":\"JWT ")+9, response.rfind("\"")-response.find("\"token\":\"JWT ") -9);
   }
   return "none";
 }
@@ -544,8 +558,13 @@ int edgine::stringToSec( string numString){
 
 
 bool edgine::isOKresponse(string response){
-  int code=atoi( response.substr(0,3).c_str() );// if toInt() fails the code would be 0
-  return code>=200 && code<=308;
+  #if defined(ARDUINO) && !defined(ESP_WROVER)
+    string code = response.substr(response.find("HTTP/") + 9, 3);
+    return atoi(code.c_str())>=200 && atoi(code.c_str()) <= 308;
+  #else
+    int code=atoi( response.substr(0,3).c_str() );// if toInt() fails the code would be 0
+    return code>=200 && code<=308;
+  #endif
 }
 
 bool edgine::isaDigit(string numberStr){

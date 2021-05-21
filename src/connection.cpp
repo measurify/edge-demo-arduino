@@ -7,7 +7,9 @@
 #include "connection.h"
 
 #include <Arduino.h>
+#ifdef ESP_WROVER
 #include <esp_wifi.h>
+#endif
 #include <WiFi.h>
 
 
@@ -26,12 +28,14 @@ connection::connection(){
 }
 
 void connection::setupConnection(const char* ssidWifi,const char* passWifi){
+  #ifdef ESP_WROVER
   wifi_config_t current_conf;
   esp_wifi_get_config(WIFI_IF_STA, &current_conf);
   current_conf.sta.listen_interval = (uint16_t)65535;// max uint16
   esp_wifi_set_config(WIFI_IF_STA, &current_conf);
 
   esp_wifi_set_ps(WIFI_PS_MAX_MODEM);// set Power Saving Mode without shutdown WIFI
+  #endif
   if(!TESTING){
     delay(1000);
     WiFi.begin(ssidWifi, passWifi); 
@@ -44,6 +48,8 @@ void connection::setupConnection(const char* ssidWifi,const char* passWifi){
   else{
 	  connected=true;
   }
+  ssid = ssidWifi;
+  password = passWifi;
 }
 
 void connection::disconnect(){  
@@ -62,8 +68,16 @@ void connection::disconnect(){
 void connection::reconnect(){ 
   if(!TESTING){
     Serial.println(F("Reconnecting.."));
+    #ifdef ESP_WROVER
     WiFi.reconnect();
-
+    #else
+    delay(1000);
+    WiFi.begin(ssid, password); 
+    while (WiFi.status() != WL_CONNECTED) {
+      delay(2000);
+      Serial.println(F("Connecting to WiFi.."));
+    }
+    #endif
     if(WiFi.status() == WL_CONNECTED)
       Serial.println(F("Reconnected"));
   }
@@ -71,6 +85,7 @@ void connection::reconnect(){
 	  connected=true;
   }
 }
+
 
 
 bool connection::isConnected(){ 
