@@ -144,6 +144,12 @@ string APIRest::GETInfoUpdateDate(string url, string token)
           response += client.read();
         }
       }
+      if (isHTTPCodeOk(parseHTTPCode(response)))
+      { //Check for the returning code
+        startingTime = millis();
+        timestamp = parseResponse(response, "timestamp");
+        // example of timestamp in milliseconds: "1580394697254"
+      }
     }
     else
     {
@@ -783,8 +789,11 @@ bool APIRest::needToBeRePOST(string response)
 
 string APIRest::getActualDate()
 {
-
+  #ifdef ESP_WROVER
   timeElapsed = ((long)clock() / CLOCKS_PER_SEC) * SECOND - startingTime; //in milliseconds
+  #else
+  timeElapsed = millis() - startingTime;
+  #endif
   // [TBD] Arduino does not support std::to_string('float') so I used here string( String('float').c_str() )
   return string(String(atof(timestamp.c_str()) + timeElapsed).c_str());
 }
